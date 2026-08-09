@@ -132,9 +132,10 @@ export default function MusicPlayer({ tracks, trackIndex, setTrackIndex }) {
   }
 
   const progressPct = duration ? (currentTime / duration) * 100 : 0;
-
+  // console.log(track);
   return (
     <div className="music-player">
+    
       <div className="music-player__art" style={{ background: track.accent }}>
         {/* YT.Player replaces this div with the real embed, sized to
             double as "album art" — it's live video, not a mockup. */}
