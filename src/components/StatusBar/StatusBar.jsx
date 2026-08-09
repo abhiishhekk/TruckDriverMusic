@@ -17,8 +17,11 @@ export default function StatusBar() {
       <span className="status-bar__time">{time}</span>
 
       <span className="status-bar__online">
-        <span className="status-bar__dot" aria-hidden="true" />
-        Indicator Is Always Green Here
+        <span className="status-bar__indicator">
+          <span className="status-bar__dot" aria-hidden="true" />
+          {/* <span className="status-bar__bar" aria-hidden="true" /> */}
+        </span>
+        <span className="status-bar__label">Indicator Is Always Green Here</span>
       </span>
 
       <nav className="status-bar__links">

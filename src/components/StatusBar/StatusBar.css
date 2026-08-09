@@ -12,8 +12,17 @@
   text-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
 }
 
+@media (min-width: 641px) {
+  .status-bar {
+    padding-bottom: 12px; /* extra room so indicator pulse isn't clipped on wider viewports */
+  }
+}
+
 .status-bar__time {
   font-size: 1.1rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .status-bar__online {
@@ -23,7 +32,33 @@
   margin-left: auto;
   margin-right: auto;
   font-size: 1rem;
+  white-space: nowrap;
+  overflow: visible; /* allow the pulsing box-shadow to show */
+  text-overflow: ellipsis;
   opacity: 0.9;
+  flex-direction: row;
+}
+
+.status-bar__indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.status-bar__bar {
+  width: 48px;
+  height: 6px;
+  background: #5fe08a;
+  border-radius: 4px;
+  box-shadow: 0 0 10px rgba(95, 224, 138, 0.35);
+  flex: 0 0 auto;
+}
+
+.status-bar__label {
+  font-size: 1rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .status-bar__dot {
@@ -66,7 +101,81 @@
 }
 
 @media (max-width: 640px) {
-  .status-bar__online span:last-child,
+  .status-bar {
+    padding: 10px 14px;
+    gap: 6px;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 12px; /* give indicator room */
+  }
+
+  .status-bar__time {
+    font-size: 0.98rem;
+    order: 1;
+    text-align: center;
+    width: 100%;
+  }
+
+  /* Replace the inline online text with a small green indicator line below the time */
+  /* show a pulsing dot to the left of a short, fixed bar and keep the label visible but compact */
+  .status-bar__online {
+    order: 2;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    width: auto;
+    opacity: 1;
+  }
+
+  .status-bar__indicator {
+    gap: 10px;
+  }
+
+  .status-bar__dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #5fe08a;
+    box-shadow: 0 0 0 0 rgba(95, 224, 138, 0.6);
+    animation: pulse 2.2s ease-out infinite;
+    flex: 0 0 auto;
+  }
+
+  .status-bar__bar {
+    width: 48px;
+    height: 6px;
+  }
+
+  .status-bar__label {
+    font-size: 0.85rem;
+    color: var(--paper);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 200px;
+    text-align: center;
+  }
+
+  @media (max-width: 360px) {
+    .status-bar__bar {
+      width: 36px;
+      height: 5px;
+    }
+
+    .status-bar__dot {
+      width: 9px;
+      height: 9px;
+    }
+
+    .status-bar__label {
+      max-width: 160px;
+      font-size: 0.78rem;
+    }
+  }
+
   .status-bar__links {
     display: none;
   }

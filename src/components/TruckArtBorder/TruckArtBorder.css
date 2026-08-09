@@ -85,7 +85,7 @@
 @media (max-width: 640px) {
   .truck-art-medallion,
   .truck-art-tassel {
-    display: none;
+    /* display: none; */
   }
   .truck-art-border {
     padding: 0 12px;

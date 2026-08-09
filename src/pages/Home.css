@@ -12,6 +12,13 @@
   padding-bottom: 5vh;
 }
 
+@media (max-width: 640px) {
+  .home__content {
+    /* ensure there's breathing room under the status bar on small screens */
+    padding-top: 56px;
+  }
+}
+
 .home__spacer {
   flex: 1;
   min-height: 4vh;
