@@ -12,10 +12,41 @@
   padding-bottom: 5vh;
 }
 
+.home__shayaris {
+  width: min(900px, 92vw);
+  margin: 1.5rem auto 0;
+  padding: 0.75rem 1rem;
+  text-align: center;
+}
+
+.home__shayari {
+  margin: 0;
+  max-width: 100%;
+  font-family: var(--font-display);
+  font-size: clamp(1.05rem, 2vw, 1.8rem);
+  line-height: 1.35;
+  font-weight: 600;
+  font-style: italic;
+  letter-spacing: 0.01em;
+  color: rgba(251, 243, 227, 0.72);
+  text-wrap: balance;
+  text-shadow: 0 3px 16px rgba(0, 0, 0, 0.4);
+}
+
 @media (max-width: 640px) {
   .home__content {
     /* ensure there's breathing room under the status bar on small screens */
     padding-top: 56px;
+  }
+
+  .home__shayaris {
+    width: 94vw;
+    margin-top: 1rem;
+    padding-inline: 0.5rem;
+  }
+
+  .home__shayari {
+    font-size: clamp(0.95rem, 4.2vw, 1.4rem);
   }
 }
 
