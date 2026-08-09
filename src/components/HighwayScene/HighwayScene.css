@@ -1,0 +1,40 @@
+.highway-scene {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+.scene-bulb {
+  animation: twinkle 2.4s ease-in-out infinite;
+}
+
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.scene-headlight {
+  filter: drop-shadow(0 0 6px var(--headlight));
+}
+
+/* The truck drives in from off-screen left, crosses the road, and
+   loops back — a slow, ambient loop rather than a one-shot. */
+.scene-truck {
+  animation: drive 22s linear infinite;
+}
+
+@keyframes drive {
+  0% {
+    transform: translateX(-260px);
+  }
+  100% {
+    transform: translateX(1700px);
+  }
+}

@@ -1,0 +1,9 @@
+node_modules/
+dist/
+
+# Real credentials — .env.example is the safe template to commit,
+# this file (with your actual key in it) should never be.
+.env
+.env.local
+
+.DS_Store

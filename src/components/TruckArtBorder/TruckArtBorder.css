@@ -1,0 +1,93 @@
+.truck-art-border {
+  position: relative;
+  z-index: 5;
+  margin: 0 auto;
+  max-width: min(880px, 92vw);
+  padding: 0 30px;
+}
+
+.truck-art-border__stripe {
+  height: 10px;
+  border-radius: 4px;
+  background: repeating-linear-gradient(
+    -45deg,
+    var(--sign-red) 0 14px,
+    var(--headlight) 14px 28px
+  );
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+}
+
+.truck-art-border__stripe--top {
+  margin-bottom: 18px;
+}
+
+.truck-art-border__stripe--bottom {
+  margin-top: 18px;
+}
+
+.truck-art-border__inner {
+  position: relative;
+}
+
+.truck-art-medallion {
+  position: absolute;
+  width: 46px;
+  height: 46px;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.45));
+}
+
+.truck-art-medallion--tl {
+  top: 6px;
+  left: -6px;
+}
+.truck-art-medallion--tr {
+  top: 6px;
+  right: -6px;
+}
+.truck-art-medallion--bl {
+  bottom: 6px;
+  left: -6px;
+}
+.truck-art-medallion--br {
+  bottom: 6px;
+  right: -6px;
+}
+
+/* Tassels hang off the outer frame, not the inner content box, so
+   they read as part of the border rather than the title text. */
+.truck-art-tassel {
+  position: absolute;
+  top: 4px;
+  width: 34px;
+  height: 78px;
+  transform-origin: top center;
+  animation: truck-art-sway 3.6s ease-in-out infinite;
+}
+
+.truck-art-tassel--left {
+  left: -6px;
+}
+.truck-art-tassel--right {
+  right: -6px;
+  animation-delay: -1.8s;
+}
+
+@keyframes truck-art-sway {
+  0%,
+  100% {
+    transform: rotate(-4deg);
+  }
+  50% {
+    transform: rotate(4deg);
+  }
+}
+
+@media (max-width: 640px) {
+  .truck-art-medallion,
+  .truck-art-tassel {
+    display: none;
+  }
+  .truck-art-border {
+    padding: 0 12px;
+  }
+}

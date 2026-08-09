@@ -1,0 +1,67 @@
+/* ===================================================================
+   DESIGN TOKENS
+   One place to tweak the whole look — every component below reads
+   its colors and fonts from these variables instead of hardcoding
+   values, so re-theming the site means editing this block only.
+=================================================================== */
+:root {
+  /* -- Palette: dusk highway, not the barbershop's daylight red -- */
+  --sky-top: #1b2647;      /* deep indigo night sky */
+  --sky-mid: #6a3a5c;      /* dusk transition */
+  --sky-bottom: #ff8c42;   /* sunset orange at the horizon */
+
+  --sign-red: #c4272d;     /* hand-painted truck-back red */
+  --sign-red-dark: #7c2712;
+  --sign-blue: #1c4e9c;    /* truck-art flower-motif blue */
+  --sand: #f3e3c3;         /* road-shoulder cream */
+  --asphalt: #17140f;      /* road / footer black */
+  --headlight: #ffd166;    /* truck headlight glow, also the "HORN PLEASE" yellow */
+
+  --ink: #241a12;          /* body text on light surfaces */
+  --paper: #fbf3e3;        /* light UI surface */
+
+  /* -- Type -- */
+  --font-display: "Baloo 2", "Noto Sans Devanagari", system-ui, sans-serif;
+  --font-ui: "Rajdhani", system-ui, sans-serif;
+
+  /* -- Layout -- */
+  --radius-lg: 26px;
+  --radius-pill: 999px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  font-family: var(--font-ui);
+  color: var(--paper);
+  background: var(--asphalt);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+/* Respect users who've asked for less motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
