@@ -6,7 +6,7 @@ import "./MusicPlayer.css";
 // branding) since our own buttons drive playback — the embed just
 // needs to exist and hold the video.
 const PLAYER_VARS = {
-  autoplay: 0,
+  autoplay: 1,
   controls: 0,
   disablekb: 1,
   modestbranding: 1,
@@ -24,8 +24,10 @@ export default function MusicPlayer({ tracks, trackIndex, setTrackIndex }) {
   const mountRef = useRef(null);
   const playerRef = useRef(null);
   const pollRef = useRef(null);
+  const isInitialTrackRef = useRef(true);
 
   const [isReady, setIsReady] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
@@ -43,7 +45,11 @@ export default function MusicPlayer({ tracks, trackIndex, setTrackIndex }) {
       videoId: track.youtubeId,
       playerVars: PLAYER_VARS,
       events: {
-        onReady: () => setIsReady(true),
+        onReady: () => {
+          setIsReady(true);
+          playerRef.current?.mute?.();
+          playerRef.current?.playVideo?.();
+        },
         onStateChange: handleStateChange,
       },
     });
@@ -59,7 +65,18 @@ export default function MusicPlayer({ tracks, trackIndex, setTrackIndex }) {
   // very first track is already loaded by the constructor above).
   useEffect(() => {
     if (!isReady || !playerRef.current) return;
+
+    if (isInitialTrackRef.current) {
+      isInitialTrackRef.current = false;
+      playerRef.current.mute?.();
+      playerRef.current.playVideo();
+      return;
+    }
+
+    setIsLoading(true);
+    setIsPlaying(false);
     playerRef.current.loadVideoById(track.youtubeId);
+    playerRef.current.playVideo();
     setCurrentTime(0);
     setDuration(0);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -70,13 +87,19 @@ export default function MusicPlayer({ tracks, trackIndex, setTrackIndex }) {
   function handleStateChange(e) {
     const State = window.YT.PlayerState;
     if (e.data === State.PLAYING) {
+      playerRef.current?.unMute?.();
+      setIsLoading(false);
       setIsPlaying(true);
       setDuration(playerRef.current.getDuration());
       startPolling();
     } else if (e.data === State.PAUSED) {
+      setIsLoading(false);
       setIsPlaying(false);
       stopPolling();
+    } else if (e.data === State.BUFFERING) {
+      setIsLoading(true);
     } else if (e.data === State.ENDED) {
+      setIsLoading(false);
       setIsPlaying(false);
       stopPolling();
       goNext();
@@ -100,10 +123,11 @@ export default function MusicPlayer({ tracks, trackIndex, setTrackIndex }) {
   }
 
   function togglePlay() {
-    if (!playerRef.current || !isReady) return;
+    if (!playerRef.current || !isReady || isLoading) return;
     if (isPlaying) {
       playerRef.current.pauseVideo();
     } else {
+      playerRef.current.unMute?.();
       playerRef.current.playVideo();
     }
   }
@@ -158,12 +182,14 @@ export default function MusicPlayer({ tracks, trackIndex, setTrackIndex }) {
         </button>
         <button
           type="button"
-          className="music-player__btn music-player__btn--play"
+          className={`music-player__btn music-player__btn--play ${
+            isLoading ? "music-player__btn--loading" : ""
+          }`}
           onClick={togglePlay}
-          aria-label={isPlaying ? "Pause" : "Play"}
-          disabled={!isReady}
+          aria-label={isLoading ? "Loading" : isPlaying ? "Pause" : "Play"}
+          disabled={!isReady || isLoading}
         >
-          {isPlaying ? <IconPause /> : <IconPlay />}
+          {isLoading ? <LoadingSpinner /> : isPlaying ? <IconPause /> : <IconPlay />}
         </button>
         <button
           type="button"
@@ -230,4 +256,8 @@ function IconPrev() {
       <path d="M18 5l-9 7 9 7V5zM5 5h2v14H5z" />
     </svg>
   );
+}
+
+function LoadingSpinner() {
+  return <span className="music-player__spinner" aria-hidden="true" />;
 }

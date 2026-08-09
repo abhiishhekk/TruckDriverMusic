@@ -31,8 +31,10 @@ export default function HighwayScene() {
 
       {/* -- sky -- */}
       <rect x="0" y="0" width="1600" height="900" fill="url(#sky)" />
-      <circle cx="1180" cy="330" r="220" fill="url(#sunGlow)" />
-      <circle cx="1180" cy="330" r="70" fill="#ffdf8f" opacity="0.9" />
+      <g className="scene-moon">
+        <circle cx="1180" cy="330" r="220" fill="url(#sunGlow)" />
+        <circle cx="1180" cy="330" r="70" fill="#ffdf8f" opacity="0.9" />
+      </g>
 
       {/* -- distant hills -- */}
       <path
@@ -74,6 +76,14 @@ export default function HighwayScene() {
         <line x1="800" y1="900" x2="800" y2="700" />
       </g>
 
+      {/* -- foreground palm silhouette, right -- */}
+      <g transform="translate(1430,540)" fill="#1c2b1a" opacity="0.85">
+        <rect x="18" y="60" width="14" height="220" />
+        <path d="M25,60 C-40,20 -70,-30 -60,-70 C-10,-50 15,-10 25,60 Z" />
+        <path d="M25,60 C90,10 120,-40 100,-75 C50,-55 30,-15 25,60 Z" />
+        <path d="M25,60 C-20,90 -60,110 -80,90 C-50,60 -10,40 25,60 Z" />
+      </g>
+
       {/* -- truck, animated driving left to right along the road -- */}
       <g className="scene-truck">
         <g transform="translate(0,760) scale(1.15)">
@@ -93,14 +103,6 @@ export default function HighwayScene() {
           <circle cx="70" cy="76" r="6" fill="#4a4640" />
           <circle cx="150" cy="76" r="6" fill="#4a4640" />
         </g>
-      </g>
-
-      {/* -- foreground palm silhouette, right -- */}
-      <g transform="translate(1430,540)" fill="#1c2b1a" opacity="0.85">
-        <rect x="18" y="60" width="14" height="220" />
-        <path d="M25,60 C-40,20 -70,-30 -60,-70 C-10,-50 15,-10 25,60 Z" />
-        <path d="M25,60 C90,10 120,-40 100,-75 C50,-55 30,-15 25,60 Z" />
-        <path d="M25,60 C-20,90 -60,110 -80,90 C-50,60 -10,40 25,60 Z" />
       </g>
     </svg>
   );

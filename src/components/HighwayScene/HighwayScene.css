@@ -24,6 +24,32 @@
   filter: drop-shadow(0 0 6px var(--headlight));
 }
 
+.scene-moon {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: moonDrift 720s linear infinite;
+}
+
+@keyframes moonDrift {
+  0% {
+    transform: translate3d(-1260px, -30px, 0);
+    opacity: 0;
+  }
+  8% {
+    opacity: 1;
+  }
+  25% {
+    transform: translate3d(80px, -60px, 0);
+  }
+  50% {
+    transform: translate3d(760px, -30px, 0);
+  }
+  100% {
+    transform: translate3d(1760px, -26px, 0);
+    opacity: 0;
+  }
+}
+
 /* The truck drives in from off-screen left, crosses the road, and
    loops back — a slow, ambient loop rather than a one-shot. */
 .scene-truck {
