@@ -25,7 +25,7 @@ export default function StatusBar() {
           {/* <span className="status-bar__bar" aria-hidden="true" /> */}
         </span>
         <span className="status-bar__label">
-          {onlineCount} {onlineCount === 1 ? "traveller" : "travellers"} on the road right now
+          {onlineCount} People Driving Now
         </span>
       </span>
 
