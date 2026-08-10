@@ -96,11 +96,11 @@ export default function Home() {
 
         <div className="home__spacer" />
 
-        <TrackList
+        {/* <TrackList
           tracks={playlist}
           trackIndex={trackIndex}
           setTrackIndex={setTrackIndex}
-        />
+        /> */}
 
         <MusicPlayer
           tracks={playlist}
