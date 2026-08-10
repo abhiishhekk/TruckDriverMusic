@@ -1,4 +1,4 @@
-# ट्रक ड्राइवर के गाने — Truck Driver Anthems
+# Truck Driver Anthems
 
 A static React + Vite site: a dusk highway/dhaba scene, a hero title
 framed like the hand-painted back of an Indian truck, and a working
