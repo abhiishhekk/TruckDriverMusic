@@ -556,13 +556,6 @@ export const playlist = [
     "accent": "#7c9cd4",
     "youtubeId": "qRTG8uF2ES4"
   },
-  {
-    "id": "-rePN9cxfaQ",
-    "title": "Tera Mera Rishta",
-    "artist": "Mustafa Zahid - Topic",
-    "accent": "#ff8c42",
-    "youtubeId": "-rePN9cxfaQ"
-  },
   
   {
     "id": "o-9VdyXZKsQ",

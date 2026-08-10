@@ -25,6 +25,11 @@ export default function MusicPlayer({ tracks, trackIndex, setTrackIndex }) {
   const playerRef = useRef(null);
   const pollRef = useRef(null);
   const isInitialTrackRef = useRef(true);
+  // Stack of track indices actually played before the current one, in
+  // order — this is what makes "prev" return to the real previous song
+  // instead of just doing `trackIndex - 1` (which is meaningless once
+  // "next" is picking randomly rather than moving sequentially).
+  const historyRef = useRef([]);
 
   const [isReady, setIsReady] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -200,12 +205,20 @@ export default function MusicPlayer({ tracks, trackIndex, setTrackIndex }) {
       while (next === i) {
         next = Math.floor(Math.random() * tracks.length);
       }
+      historyRef.current.push(i); // remember what we're leaving, so prev can return to it
       return next;
     });
   }
 
   function goPrev() {
-    setTrackIndex((i) => (i - 1 + tracks.length) % tracks.length);
+    setTrackIndex((i) => {
+      if (historyRef.current.length > 0) {
+        return historyRef.current.pop(); // return to the actual previous track
+      }
+      // No history yet (e.g. very first prev press before any next) —
+      // fall back to a plain sequential step.
+      return (i - 1 + tracks.length) % tracks.length;
+    });
   }
 
   function handleSeek(e) {
