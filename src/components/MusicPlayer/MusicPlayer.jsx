@@ -111,20 +111,23 @@ export default function MusicPlayer({ tracks, trackIndex, setTrackIndex }) {
     }
   }
 
-  // The IFrame API doesn't emit a "timeupdate" event like <audio>
-  // does, so we poll getCurrentTime() ourselves while something is
-  // actually playing, and stop as soon as it isn't.
+  // Use requestAnimationFrame for buttery smooth 60fps updates 
+  // instead of a 400ms interval jump.
   function startPolling() {
     stopPolling();
-    pollRef.current = setInterval(() => {
+    
+    function tick() {
       if (playerRef.current?.getCurrentTime) {
         setCurrentTime(playerRef.current.getCurrentTime());
       }
-    }, 400);
+      pollRef.current = requestAnimationFrame(tick);
+    }
+    
+    pollRef.current = requestAnimationFrame(tick);
   }
 
   function stopPolling() {
-    if (pollRef.current) clearInterval(pollRef.current);
+    if (pollRef.current) cancelAnimationFrame(pollRef.current);
   }
 
   function togglePlay() {
@@ -254,7 +257,8 @@ export default function MusicPlayer({ tracks, trackIndex, setTrackIndex }) {
             type="range"
             min="0"
             max="100"
-            value={progressPct}
+            step="any"
+            value={progressPct || 0}
             onChange={handleSeek}
             aria-label="Seek"
           />

@@ -27,7 +27,7 @@
 .scene-moon {
   transform-box: fill-box;
   transform-origin: center;
-  animation: moonDrift 720s linear infinite;
+  animation: moonDrift 1200s linear infinite;
 }
 
 @keyframes moonDrift {
