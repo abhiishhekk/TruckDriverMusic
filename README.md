@@ -140,6 +140,56 @@ swaying tassels reference the ones hung from a real truck's mirrors
 and grille. All of it is original SVG/CSS in this project, not traced
 or copied from the photo — same visual *language*, not the same artwork.
 
+## Live "travellers on the road" count
+
+The `StatusBar` shows a real count of how many browser tabs currently
+have the site open — powered by **Firebase Realtime Database**, which
+is a free client-only backend (no server code of yours involved).
+
+**One-time setup:**
+
+1. Go to [console.firebase.google.com](https://console.firebase.google.com/)
+   → *Add project* (the free **Spark** plan is enough for this).
+2. In the left sidebar: **Build → Realtime Database → Create Database**.
+   Choose any region, start in **test mode** for now.
+3. Go to the Rules tab of that database and replace the default rules
+   with something that only allows what this feature needs — clients
+   can write *only* their own presence key, and can't write anywhere
+   else or read other data:
+   ```json
+   {
+     "rules": {
+       "presence": {
+         ".read": true,
+         "$uid": {
+           ".write": true
+         }
+       }
+     }
+   }
+   ```
+4. Back in **Project settings** (gear icon, top left) → scroll to
+   *Your apps* → click the **Web** (`</>`) icon → register an app
+   (no Hosting needed) → copy the `firebaseConfig` values shown.
+5. Paste those values into `.env` (see `.env.example` for the exact
+   variable names) and run `npm install` to pull in the `firebase`
+   package.
+6. `npm run dev` — open the site in two browser tabs and watch the
+   count go from 1 to 2.
+
+**How it works:** `src/hooks/useOnlineCount.js` writes a small
+"I'm here" entry under `/presence/<random-id>` when a tab connects,
+and tells Firebase to delete that entry the instant the socket drops
+(tab closed, phone locked, wifi died — no heartbeat polling needed).
+Every tab listens to the size of `/presence` and that's the count you
+see. Nothing here needs a server you write or host — Firebase's
+websocket connection to the client *is* the whole mechanism.
+
+This is entirely optional — if you never fill in the `VITE_FIREBASE_*`
+vars, `initializeApp` will just fail quietly-ish and the count will
+sit at 1. Delete `useOnlineCount()` from `StatusBar.jsx` if you'd
+rather not use it at all.
+
 ## Making it yours
 
 - **Change the songs:** re-run `npm run fetch:playlist`, or hand-edit

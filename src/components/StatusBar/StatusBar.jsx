@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react";
+import { useOnlineCount } from "../../hooks/useOnlineCount.js";
 import "./StatusBar.css";
 
-// Small presentational component: live clock on the left, a fake
-// "listeners online" pulse in the middle, quick links on the right.
+// Small presentational component: live clock on the left, a real
+// "listeners online" count (via Firebase presence) in the middle,
+// quick links on the right.
 // No props — it's self-contained, so it's easy to drop anywhere.
 export default function StatusBar() {
   const [time, setTime] = useState(() => formatTime(new Date()));
+  const onlineCount = useOnlineCount();
 
   useEffect(() => {
     const id = setInterval(() => setTime(formatTime(new Date())), 1000 * 30);
@@ -21,7 +24,9 @@ export default function StatusBar() {
           <span className="status-bar__dot" aria-hidden="true" />
           {/* <span className="status-bar__bar" aria-hidden="true" /> */}
         </span>
-        <span className="status-bar__label">Indicator Is Always Green Here</span>
+        <span className="status-bar__label">
+          {onlineCount} {onlineCount === 1 ? "traveller" : "travellers"} on the road right now
+        </span>
       </span>
 
       <nav className="status-bar__links">
