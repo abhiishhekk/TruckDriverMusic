@@ -132,6 +132,67 @@ export default function MusicPlayer({ tracks, trackIndex, setTrackIndex }) {
     }
   }
 
+  // Integrate with the Media Session API so lock-screen / system media
+  // controls can control playback. This improves behavior when the tab
+  // is backgrounded and provides play/pause/next/prev handlers.
+  useEffect(() => {
+    if (!window.navigator || !window.navigator.mediaSession) return;
+
+    try {
+      const ms = window.navigator.mediaSession;
+
+      // Update metadata for the current track
+      ms.metadata = new window.MediaMetadata({
+        title: track.title,
+        artist: track.artist,
+        album: "Truck Anthems",
+        artwork: [
+          { src: `https://img.youtube.com/vi/${track.youtubeId}/hqdefault.jpg`, sizes: '480x360', type: 'image/jpeg' },
+        ],
+      });
+
+      ms.setActionHandler("play", () => {
+        if (playerRef.current && isReady) playerRef.current.playVideo();
+      });
+      ms.setActionHandler("pause", () => {
+        if (playerRef.current && isReady) playerRef.current.pauseVideo();
+      });
+      ms.setActionHandler("previoustrack", () => goPrev());
+      ms.setActionHandler("nexttrack", () => goNext());
+      ms.setActionHandler("seekto", (details) => {
+        if (!playerRef.current || !duration) return;
+        const seekTo = details.seekTime ?? 0;
+        playerRef.current.seekTo(seekTo, true);
+      });
+    } catch (e) {
+      // ignore unsupported browsers
+    }
+    // update whenever the track changes or readiness changes
+  }, [trackIndex, isReady]);
+
+  // Some mobile browsers may throttle or pause audio when the page is
+  // hidden. Try to resume playback if we were playing when visibility
+  // changes. This is a best-effort approach; browser policies may still
+  // prevent background audio in some environments.
+  useEffect(() => {
+    function handleVisibility() {
+      if (document.hidden) {
+        // nothing required when hidden
+      } else {
+        // when becoming visible, ensure the player is playing if it
+        // should be; this helps recover from auto-pauses.
+        if (isPlaying && playerRef.current && isReady) {
+          try {
+            playerRef.current.playVideo();
+          } catch (e) {}
+        }
+      }
+    }
+
+    document.addEventListener("visibilitychange", handleVisibility);
+    return () => document.removeEventListener("visibilitychange", handleVisibility);
+  }, [isPlaying, isReady]);
+
   function goNext() {
     setTrackIndex((i) => {
       if (tracks.length <= 1) return i;
@@ -158,17 +219,36 @@ export default function MusicPlayer({ tracks, trackIndex, setTrackIndex }) {
   const progressPct = duration ? (currentTime / duration) * 100 : 0;
   // console.log(track);
   return (
-    <div className="music-player">
+    <div className={`music-player ${isPlaying ? "is-playing" : ""}`}>
     
       <div className="music-player__art" style={{ background: track.accent }}>
-        {/* YT.Player replaces this div with the real embed, sized to
-            double as "album art" — it's live video, not a mockup. */}
+        {/* show a thumbnail image as the artwork (rotates when playing) */}
+        <img
+          className="music-player__thumb"
+          src={`https://img.youtube.com/vi/${track.youtubeId}/hqdefault.jpg`}
+          alt={track.title}
+        />
+        {/* mount for the YT.Player — keep it present so audio works reliably */}
         <div ref={mountRef} />
       </div>
 
       <div className="music-player__meta">
         <p className="music-player__title">{track.title}</p>
         <p className="music-player__artist">{track.artist}</p>
+
+        <div className="music-player__progress">
+          <input
+            type="range"
+            min="0"
+            max="100"
+            value={progressPct}
+            onChange={handleSeek}
+            aria-label="Seek"
+          />
+          <span className="music-player__time">
+            {formatTime(currentTime)} / {formatTime(duration)}
+          </span>
+        </div>
       </div>
 
       <div className="music-player__controls">
@@ -201,19 +281,7 @@ export default function MusicPlayer({ tracks, trackIndex, setTrackIndex }) {
         </button>
       </div>
 
-      <div className="music-player__progress">
-        <input
-          type="range"
-          min="0"
-          max="100"
-          value={progressPct}
-          onChange={handleSeek}
-          aria-label="Seek"
-        />
-        <span className="music-player__time">
-          {formatTime(currentTime)} / {formatTime(duration)}
-        </span>
-      </div>
+      {/* progress moved into the meta section above */}
     </div>
   );
 }
