@@ -302,13 +302,7 @@ export const playlist = [
     "accent": "#4fb3a9",
     "youtubeId": "bkWpCme6JCo"
   },
-  {
-    "id": "RizsJydNAEY",
-    "title": "Ae Mere Humsafar",
-    "artist": "Vinod Rathod - Topic",
-    "accent": "#e0576b",
-    "youtubeId": "RizsJydNAEY"
-  },
+  
   {
     "id": "e0b8UD-DBQ8",
     "title": "Too Shayar Hai Main Teri Shayari",
@@ -470,13 +464,7 @@ export const playlist = [
     "accent": "#4fb3a9",
     "youtubeId": "j0luwtxhl2U"
   },
-  {
-    "id": "AiJjYPljJ-I",
-    "title": "K.K X Emraan Hashmi Mashup (Non-Stop Jukebox) | Lo-fi 2307 | [Bollywood Lofi] #kkforever",
-    "artist": "Lo-fi 2307",
-    "accent": "#e0576b",
-    "youtubeId": "AiJjYPljJ-I"
-  },
+  
   {
     "id": "UbuhuRVoieA",
     "title": "Emraan Hashmi Mashup | Jukebox | Amtee | Bollywood Lofi",
@@ -518,13 +506,6 @@ export const playlist = [
     "artist": "Amaal Mallik - Topic",
     "accent": "#ffd166",
     "youtubeId": "WxQcbSp2JGo"
-  },
-  {
-    "id": "vTMAa6zZ7jY",
-    "title": "7 Years",
-    "artist": "Lukas Graham - Topic",
-    "accent": "#b8391c",
-    "youtubeId": "vTMAa6zZ7jY"
   },
   {
     "id": "Ad11XnLcG8U",
@@ -582,13 +563,7 @@ export const playlist = [
     "accent": "#ff8c42",
     "youtubeId": "-rePN9cxfaQ"
   },
-  {
-    "id": "-ML12N-EDs4",
-    "title": "Toh Phir Aao",
-    "artist": "Mustafa Zahid - Topic",
-    "accent": "#4fb3a9",
-    "youtubeId": "-ML12N-EDs4"
-  },
+  
   {
     "id": "o-9VdyXZKsQ",
     "title": "Tujhe Bhula Diya",
@@ -610,13 +585,7 @@ export const playlist = [
     "accent": "#b8391c",
     "youtubeId": "mbEqdZsu5Mk"
   },
-  {
-    "id": "8pMiuAXNBf8",
-    "title": "Beete Lamhein",
-    "artist": "Kay Kay - Topic",
-    "accent": "#7c9cd4",
-    "youtubeId": "8pMiuAXNBf8"
-  },
+  
   {
     "id": "Hjlw1raLOdI",
     "title": "AAFREEN TERA CHEHRA",
@@ -680,13 +649,7 @@ export const playlist = [
     "accent": "#ffd166",
     "youtubeId": "9Eg4d56rt-U"
   },
-  {
-    "id": "QVhJimEpZoM",
-    "title": "Tera Mera Pyar Amar",
-    "artist": "Lata Mangeshkar - Topic",
-    "accent": "#b8391c",
-    "youtubeId": "QVhJimEpZoM"
-  },
+  
   {
     "id": "HpyX-a4r2EI",
     "title": "US LADKI PE DIL AAYA",
