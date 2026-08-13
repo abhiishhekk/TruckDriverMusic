@@ -39,7 +39,7 @@ export default function MusicPlayer({ tracks, trackIndex, setTrackIndex }) {
   const historyRef = useRef([]);
 
   const [isReady, setIsReady] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
