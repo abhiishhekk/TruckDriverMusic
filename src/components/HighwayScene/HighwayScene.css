@@ -4,63 +4,42 @@
   width: 100%;
   height: 100%;
   z-index: 0;
+  overflow: hidden;
+  background: var(--asphalt); /* shows briefly while the image loads */
 }
 
-.scene-bulb {
-  animation: twinkle 1s ease-in-out infinite;
+.highway-scene__image {
+  position: absolute;
+  inset: 0;
+  background-repeat: no-repeat;
+  background-position: center bottom;
+  background-size: cover;
 }
 
-@keyframes twinkle {
-  0%,
-  100% {
-    opacity: 0.5;
-  }
-  50% {
-    opacity: 1;
-  }
-}
-
-.scene-headlight {
-  filter: drop-shadow(0 0 6px var(--headlight));
-}
-
-.scene-moon {
-  transform-box: fill-box;
-  transform-origin: center;
-  animation: moonDrift 1200s linear infinite;
-}
-
-@keyframes moonDrift {
-  0% {
-    transform: translate3d(-1260px, -30px, 0);
-    opacity: 0;
-  }
-  8% {
-    opacity: 1;
-  }
-  25% {
-    transform: translate3d(80px, -60px, 0);
-  }
-  50% {
-    transform: translate3d(760px, -30px, 0);
-  }
-  100% {
-    transform: translate3d(1760px, -26px, 0);
-    opacity: 0;
+/* The source image is a wide landscape scene (~16:9) with its main
+   subject sitting in the left half. On a narrow/tall phone screen,
+   `cover` has to crop most of the width to fill the height, and
+   centering that crop lands on empty middle ground instead of the
+   subject. Shifting the anchor to the left brings that half into
+   view instead. */
+@media (max-width: 640px) {
+  .highway-scene__image {
+    background-position: 70% bottom;
   }
 }
 
-/* The truck drives in from off-screen left, crosses the road, and
-   loops back — a slow, ambient loop rather than a one-shot. */
-.scene-truck {
-  animation: drive 22s linear infinite;
-}
-
-@keyframes drive {
-  0% {
-    transform: translateX(-260px);
-  }
-  100% {
-    transform: translateX(1700px);
-  }
+/* Same top-dark-to-bottom-warm read as the old sky gradient, so the
+   status bar text at the top and the player at the bottom both stay
+   legible no matter what the underlying image looks like there. */
+.highway-scene__overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(10, 8, 6, 0.55) 0%,
+      rgba(10, 8, 6, 0.15) 30%,
+      rgba(10, 8, 6, 0.1) 60%,
+      rgba(10, 8, 6, 0.6) 100%
+    );
 }

@@ -30,12 +30,10 @@ export default function StatusBar() {
       </span>
 
       <nav className="status-bar__links">
-        <p>
+
+        <a href="https://music.youtube.com/playlist?list=PLJORI4GEoTfc" target="_blank" rel="noopener noreferrer">
           दुर्घटना से देरी भली
-        </p>
-        {/* <a href="#" onClick={(e) => e.preventDefault()}>
-          दुर्घटना से देरी भली
-        </a> */}
+        </a>
       </nav>
     </header>
   );

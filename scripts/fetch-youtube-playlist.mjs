@@ -1,0 +1,165 @@
+// Pulls EVERY track from one YouTube/YouTube Music playlist and writes
+// it to src/data/playlist.js. Can be run two ways:
+//
+//   npm run fetch:playlist:youtube-single     (standalone — errors are fatal)
+//   npm run dev                               (auto-refreshes first, via
+//                                               scripts/predev.mjs — errors
+//                                               are just a warning, dev
+//                                               still starts with whatever
+//                                               playlist.js already has)
+//
+// Needs YOUTUBE_API_KEY in .env (see .env.example) and, optionally,
+// YOUTUBE_PLAYLIST_ID — falls back to DEFAULT_PLAYLIST_ID below if unset.
+//
+// This uses playlistItems.list, which costs 1 quota unit per page of up
+// to 50 tracks — so even a few hundred-song playlist is cheap, unlike
+// the Spotify-matching script (100 units/track). No reason to cap the
+// track count here.
+
+import { writeFile, readFile } from "node:fs/promises";
+import { fileURLToPath } from "node:url";
+import path from "node:path";
+
+const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), "..");
+const OUT_PATH = path.join(ROOT, "src", "data", "playlist.js");
+
+// From the link you shared. NOTE: this ID looked short compared to a
+// typical YouTube playlist ID (most are ~34 characters) — if the fetch
+// below returns 0 or very few tracks, double check the full ID in your
+// playlist's URL (music.youtube.com/playlist?list=THIS_PART) and put
+// the complete value in YOUTUBE_PLAYLIST_ID in .env to override this.
+const DEFAULT_PLAYLIST_ID = "PLLq_Mvi6PzJg";
+
+const ACCENT_PALETTE = [
+  "#ff8c42",
+  "#4fb3a9",
+  "#e0576b",
+  "#ffd166",
+  "#b8391c",
+  "#7c9cd4",
+];
+
+async function loadDotEnv() {
+  let contents;
+  try {
+    contents = await readFile(path.join(ROOT, ".env"), "utf-8");
+  } catch {
+    return;
+  }
+  for (const line of contents.split("\n")) {
+    const trimmed = line.trim();
+    if (!trimmed || trimmed.startsWith("#")) continue;
+    const eq = trimmed.indexOf("=");
+    if (eq === -1) continue;
+    const key = trimmed.slice(0, eq).trim();
+    let value = trimmed.slice(eq + 1).trim();
+    if (
+      (value.startsWith('"') && value.endsWith('"')) ||
+      (value.startsWith("'") && value.endsWith("'"))
+    ) {
+      value = value.slice(1, -1);
+    }
+    if (!(key in process.env)) process.env[key] = value;
+  }
+}
+
+async function fetchPlaylistItems(playlistId, apiKey) {
+  const items = [];
+  let pageToken = "";
+
+  do {
+    const url = new URL("https://www.googleapis.com/youtube/v3/playlistItems");
+    url.searchParams.set("part", "snippet");
+    url.searchParams.set("playlistId", playlistId);
+    url.searchParams.set("maxResults", "50");
+    url.searchParams.set("key", apiKey);
+    if (pageToken) url.searchParams.set("pageToken", pageToken);
+
+    const res = await fetch(url);
+    if (!res.ok) {
+      const body = await res.text();
+      throw new Error(`YouTube API error: ${res.status} ${body}`);
+    }
+    const data = await res.json();
+    items.push(...(data.items || []));
+    pageToken = data.nextPageToken || "";
+  } while (pageToken);
+
+  return items;
+}
+
+function toTrack(item, accent) {
+  const videoId = item.snippet?.resourceId?.videoId;
+  if (!videoId) return null;
+  if (
+    item.snippet?.title === "Private video" ||
+    item.snippet?.title === "Deleted video"
+  ) {
+    return null;
+  }
+  return {
+    id: videoId,
+    title: item.snippet.title,
+    artist:
+      item.snippet.videoOwnerChannelTitle || item.snippet.channelTitle || "Unknown",
+    accent,
+    youtubeId: videoId,
+  };
+}
+
+// The actual work, exported so predev.mjs can call it and catch errors
+// itself instead of this file calling process.exit() on failure.
+export async function run() {
+  await loadDotEnv();
+
+  const apiKey = process.env.YOUTUBE_API_KEY;
+  if (!apiKey) {
+    throw new Error(
+      "Missing YOUTUBE_API_KEY. Put it in .env (see .env.example)."
+    );
+  }
+  const playlistId = process.env.YOUTUBE_PLAYLIST_ID || DEFAULT_PLAYLIST_ID;
+
+  console.log(`Fetching playlist ${playlistId}...`);
+  const items = await fetchPlaylistItems(playlistId, apiKey);
+  console.log(`  ${items.length} items`);
+
+  // Dedupe by video ID, keeping first occurrence so playlist order
+  // (as it appears in your actual YouTube playlist) stays stable.
+  const byVideoId = new Map();
+  items.forEach((item) => {
+    const videoId = item.snippet?.resourceId?.videoId;
+    if (videoId && !byVideoId.has(videoId)) byVideoId.set(videoId, item);
+  });
+
+  const tracks = [...byVideoId.values()]
+    .map((item, i) => toTrack(item, ACCENT_PALETTE[i % ACCENT_PALETTE.length]))
+    .filter(Boolean);
+
+  if (tracks.length === 0) {
+    throw new Error(
+      `Got 0 playable tracks back for playlist ${playlistId}. ` +
+        `Double check the ID is complete and the playlist is public.`
+    );
+  }
+
+  const fileContents = `// AUTO-GENERATED by scripts/fetch-youtube-playlist.mjs — do not hand-edit.
+// Refreshed automatically on \`npm run dev\` (see scripts/predev.mjs),
+// or manually via \`npm run fetch:playlist:youtube-single\`.
+export const playlist = ${JSON.stringify(tracks, null, 2)};
+`;
+
+  await writeFile(OUT_PATH, fileContents, "utf-8");
+  console.log(`${items.length} total -> ${tracks.length} unique tracks written to ${OUT_PATH}`);
+  return tracks.length;
+}
+
+// Only auto-run when this file is executed directly (`node
+// scripts/fetch-youtube-playlist.mjs`), not when predev.mjs imports it.
+const isDirectRun = import.meta.url === `file://${process.argv[1]}`;
+if (isDirectRun) {
+  run().catch((err) => {
+    console.error(err.message || err);
+    process.exit(1);
+  });
+}

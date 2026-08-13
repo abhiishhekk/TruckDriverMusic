@@ -5,6 +5,13 @@ import "./MusicPlayer.css";
 // Player embed options: no YouTube chrome (controls, related videos,
 // branding) since our own buttons drive playback — the embed just
 // needs to exist and hold the video.
+
+import { useMediaSession } from "../../hooks/useMediaSession.js";
+import { useWakeLock } from "../../hooks/useWakeLock.js";
+
+
+
+
 const PLAYER_VARS = {
   autoplay: 1,
   controls: 0,
@@ -32,12 +39,26 @@ export default function MusicPlayer({ tracks, trackIndex, setTrackIndex }) {
   const historyRef = useRef([]);
 
   const [isReady, setIsReady] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
 
   const track = tracks[trackIndex];
+
+  useWakeLock(isPlaying);
+     // ...inside the component, alongside your other hooks:
+  useMediaSession({
+  title: track.title,
+  artist: track.artist,
+  artwork: `https://i.ytimg.com/vi/${track.youtubeId}/hqdefault.jpg`,
+  isPlaying,
+  onPlay: () => playerRef.current?.playVideo(),
+  onPause: () => playerRef.current?.pauseVideo(),
+  onNext: goNext,
+  onPrev: goPrev,
+});
+ 
 
   // Create the underlying YT.Player exactly once, as soon as the
   // IFrame API script has finished loading.
@@ -231,6 +252,8 @@ export default function MusicPlayer({ tracks, trackIndex, setTrackIndex }) {
     playerRef.current?.seekTo(seekTo, true);
     setCurrentTime(seekTo);
   }
+
+
 
   const progressPct = duration ? (currentTime / duration) * 100 : 0;
   // console.log(track);
