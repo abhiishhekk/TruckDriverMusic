@@ -40,6 +40,10 @@ body,
   padding: 0;
   height: 100dvh;
   width: 100dvw;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
 }
 
 body {
