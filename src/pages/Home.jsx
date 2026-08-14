@@ -86,9 +86,9 @@ export default function Home() {
 
       <div className="home__content">
         <StatusBar />
-        <TruckArtBorder>
           <HighwaySign />
-        </TruckArtBorder>
+        {/* <TruckArtBorder>
+        </TruckArtBorder> */}
 
         <section className="home__shayaris" aria-label="Shayari collection">
           <p className="home__shayari">"{currentShayari}"</p>

@@ -9,7 +9,7 @@ import "./HighwayScene.css";
 // Swap the image any time by replacing public/Images/scene-background.svg
 // (or point BACKGROUND_IMAGE at a different file) — nothing else here
 // needs to change.
-const BACKGROUND_IMAGE = "/Images/background-1.svg";
+const BACKGROUND_IMAGE = "/Images/background-1.png";
 
 export default function HighwayScene() {
   return (
