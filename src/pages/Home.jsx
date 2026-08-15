@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import HighwayScene from "../components/HighwayScene/HighwayScene.jsx";
 import StatusBar from "../components/StatusBar/StatusBar.jsx";
 import HighwaySign from "../components/HighwaySign/HighwaySign.jsx";
 import TruckArtBorder from "../components/TruckArtBorder/TruckArtBorder.jsx";
 import MusicPlayer from "../components/MusicPlayer/MusicPlayer.jsx";
 import TrackList from "../components/TrackList/TrackList.jsx";
+import HornButtons from "../components/HornButtons/HornButtons.jsx";
 import { playlist } from "../data/playlist.js";
 import "./Home.css";
 
@@ -80,9 +81,29 @@ export default function Home() {
     );
   }, [trackIndex]);
 
+  // Horns duck the music: remember whether it was actually playing
+  // right before the horn started, so a horn pressed while the music
+  // was already paused doesn't un-pause it afterwards.
+  const musicPlayerRef = useRef(null);
+  const wasPlayingBeforeHornRef = useRef(false);
+
+  function handleHornStart() {
+    const player = musicPlayerRef.current;
+    if (!player) return;
+    wasPlayingBeforeHornRef.current = player.isPlaying();
+    player.pauseForHorn();
+  }
+
+  function handleHornEnd() {
+    if (wasPlayingBeforeHornRef.current) {
+      musicPlayerRef.current?.resumeFromHorn();
+    }
+  }
+
   return (
     <div className="home">
       <HighwayScene />
+      <HornButtons onHornStart={handleHornStart} onHornEnd={handleHornEnd} />
 
       <div className="home__content">
         <StatusBar />
@@ -103,6 +124,7 @@ export default function Home() {
         /> */}
 
         <MusicPlayer
+          ref={musicPlayerRef}
           tracks={playlist}
           trackIndex={trackIndex}
           setTrackIndex={setTrackIndex}

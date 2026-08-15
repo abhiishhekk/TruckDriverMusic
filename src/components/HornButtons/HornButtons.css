@@ -1,0 +1,151 @@
+/* Fixed to the left edge, vertically centered — same spot the
+   reference mock shows the single "Horn ok pleaseeee" pill, just
+   stacked three deep. Lives outside .home__content (a sibling of it)
+   so it isn't caught up in that block's entrance transform. */
+.horn-buttons {
+  position: fixed;
+  left: 24px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 8;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  opacity: 0;
+  animation: horn-buttons-fade-in 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.35s
+    both;
+}
+
+.horn-buttons__btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 14px 8px 10px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: var(--radius-pill);
+  background: rgba(20, 26, 46, 0.55);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+  color: var(--paper);
+  transform-origin: left center;
+  transition: transform 0.15s ease, box-shadow 0.15s ease,
+    background 0.15s ease;
+}
+
+.horn-buttons__btn:hover {
+  background: rgba(20, 26, 46, 0.72);
+}
+
+.horn-buttons__btn:active {
+  transform: scale(0.97);
+}
+
+.horn-buttons__btn svg {
+  flex-shrink: 0;
+  opacity: 0.9;
+}
+
+.horn-buttons__text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+  text-align: left;
+}
+
+.horn-buttons__title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.78rem;
+  white-space: nowrap;
+}
+
+.horn-buttons__subtitle {
+  font-family: var(--font-ui);
+  font-weight: 600;
+  font-size: 0.68rem;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  opacity: 0.75;
+  white-space: nowrap;
+}
+
+/* Grow-and-shake while the horn sound is actually playing. */
+.horn-buttons__btn.is-honking {
+  animation: horn-honk 0.32s ease-in-out infinite;
+  background: rgba(196, 39, 45, 0.65);
+  border-color: rgba(255, 209, 102, 0.55);
+  box-shadow: 0 0 0 6px rgba(255, 209, 102, 0.22),
+    0 10px 26px rgba(0, 0, 0, 0.45);
+}
+
+@keyframes horn-honk {
+  0%,
+  100% {
+    transform: scale(1.12) rotate(0deg);
+  }
+  20% {
+    transform: scale(1.17) rotate(-4deg);
+  }
+  40% {
+    transform: scale(1.15) rotate(4deg);
+  }
+  60% {
+    transform: scale(1.17) rotate(-3deg);
+  }
+  80% {
+    transform: scale(1.15) rotate(3deg);
+  }
+}
+
+@keyframes horn-buttons-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-50%) translateX(-14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(-50%) translateX(0);
+  }
+}
+
+@media (max-width: 640px) {
+  .horn-buttons {
+    left: 14px;
+    gap: 9px;
+  }
+
+  .horn-buttons__btn {
+    padding: 7px 12px 7px 9px;
+  }
+
+  .horn-buttons__title {
+    font-size: 0.7rem;
+  }
+
+  .horn-buttons__subtitle {
+    font-size: 0.62rem;
+  }
+}
+
+@media (max-width: 380px) {
+  /* Keep the same icon + two-line text layout as bigger screens —
+     just scale it down a touch more so it doesn't crowd the edge. */
+  .horn-buttons {
+    left: 10px;
+    gap: 7px;
+  }
+
+  .horn-buttons__btn {
+    padding: 6px 10px 6px 8px;
+    gap: 8px;
+  }
+
+  .horn-buttons__title {
+    font-size: 0.64rem;
+  }
+
+  .horn-buttons__subtitle {
+    font-size: 0.56rem;
+  }
+}
