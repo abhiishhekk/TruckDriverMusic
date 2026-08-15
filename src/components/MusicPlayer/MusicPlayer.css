@@ -177,6 +177,7 @@
   align-items: center;
   gap: 10px;
   margin-top: 6px;
+
 }
 
 .music-player__progress input[type="range"] {
@@ -211,6 +212,10 @@
   font-variant-numeric: tabular-nums;
   font-size: 0.78rem;
   color: rgba(251, 243, 227, 0.6);
+  /* padding: 1rem; */
+  flex-basis: 4rem;   /* new */
+  width: 4rem;        /* new */
+  text-align: center; /* new, keeps digits centered */
 }
 
 @media (max-width: 560px) {
