@@ -14,7 +14,7 @@
     rgba(30, 20, 14, 0.88),
     rgba(60, 34, 22, 0.82)
   ); */
-  backdrop-filter: blur(14px);
+  backdrop-filter: blur(100px);
   box-shadow: 0 12px 28px rgba(0, 0, 0, 0.45);
   border: 1px solid rgba(255, 209, 102, 0.14);
 

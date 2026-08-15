@@ -30,7 +30,12 @@
   color: var(--paper);
   transform-origin: left center;
   transition: transform 0.15s ease, box-shadow 0.15s ease,
-    background 0.15s ease;
+  background 0.15s ease;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none; /* stops the press-and-hold callout menu on iOS */
+  outline: none;
 }
 
 .horn-buttons__btn:hover {
