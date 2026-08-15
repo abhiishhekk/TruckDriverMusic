@@ -87,7 +87,7 @@ export default function HornButtons({ onHornStart, onHornEnd }) {
         >
           <IconHorn />
           <span className="horn-buttons__text">
-            <span className="horn-buttons__title">हॉर्न ओके प्लीज़</span>
+            <span className="horn-buttons__title">हॉर्न प्लीज़</span>
             <span className="horn-buttons__subtitle">{horn.label}</span>
           </span>
         </button>
