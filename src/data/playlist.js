@@ -393,5 +393,194 @@ export const playlist = [
     "artist": "Alka Yagnik - Topic",
     "accent": "#4fb3a9",
     "youtubeId": "YhEdDnxHZt4"
+  },
+  {
+    "id": "JfcYRdjbcy4",
+    "title": "Bahut Jatate Ho Pyar",
+    "artist": "Alka Yagnik - Topic",
+    "accent": "#e0576b",
+    "youtubeId": "JfcYRdjbcy4"
+  },
+  {
+    "id": "bkWpCme6JCo",
+    "title": "Dil Ne Yeh Kaha Hain Dil Se",
+    "artist": "Udit Narayan - Topic",
+    "accent": "#ffd166",
+    "youtubeId": "bkWpCme6JCo"
+  },
+  {
+    "id": "5MIGQBpVeqs",
+    "title": "Mujhse Mohabbat Ka",
+    "artist": "Kumar Sanu - Topic",
+    "accent": "#b8391c",
+    "youtubeId": "5MIGQBpVeqs"
+  },
+  {
+    "id": "ucgl0W9lit8",
+    "title": "Main Ishq Uska",
+    "artist": "Babul Supriyo - Topic",
+    "accent": "#7c9cd4",
+    "youtubeId": "ucgl0W9lit8"
+  },
+  {
+    "id": "e0b8UD-DBQ8",
+    "title": "Too Shayar Hai Main Teri Shayari",
+    "artist": "Alka Yagnik - Topic",
+    "accent": "#ff8c42",
+    "youtubeId": "e0b8UD-DBQ8"
+  },
+  {
+    "id": "a_Xja_XslQM",
+    "title": "Mubarak Mubarak",
+    "artist": "Udit Narayan - Topic",
+    "accent": "#4fb3a9",
+    "youtubeId": "a_Xja_XslQM"
+  },
+  {
+    "id": "QfKLeqccrkg",
+    "title": "Dil To Pagal Hai",
+    "artist": "Lata Mangeshkar - Topic",
+    "accent": "#e0576b",
+    "youtubeId": "QfKLeqccrkg"
+  },
+  {
+    "id": "cl30b-2ozq4",
+    "title": "WOH HO TUM",
+    "artist": "Sonu Nigam - Topic",
+    "accent": "#ffd166",
+    "youtubeId": "cl30b-2ozq4"
+  },
+  {
+    "id": "PhWhGt28wNY",
+    "title": "Ramta Jogi",
+    "artist": "Sukhwinder Singh - Topic",
+    "accent": "#b8391c",
+    "youtubeId": "PhWhGt28wNY"
+  },
+  {
+    "id": "Bx_Ie97I3zg",
+    "title": "Chalte Chalte",
+    "artist": "Udbhav - Topic",
+    "accent": "#7c9cd4",
+    "youtubeId": "Bx_Ie97I3zg"
+  },
+  {
+    "id": "1R8MGdgZDns",
+    "title": "Pehla Nasha",
+    "artist": "Udit Narayan - Topic",
+    "accent": "#ff8c42",
+    "youtubeId": "1R8MGdgZDns"
+  },
+  {
+    "id": "80zh6tgMjtA",
+    "title": "Chunnari Chunnari",
+    "artist": "Abhijeet - Topic",
+    "accent": "#4fb3a9",
+    "youtubeId": "80zh6tgMjtA"
+  },
+  {
+    "id": "w3TO7ErAqwE",
+    "title": "Too Cheez Badi Hain",
+    "artist": "Udit Narayan - Topic",
+    "accent": "#e0576b",
+    "youtubeId": "w3TO7ErAqwE"
+  },
+  {
+    "id": "xptbe8gJFI4",
+    "title": "Saathiya Tune Kya Kiya",
+    "artist": "S. P. Balasubrahmanyam - Topic",
+    "accent": "#ffd166",
+    "youtubeId": "xptbe8gJFI4"
+  },
+  {
+    "id": "XuA0BvYksyI",
+    "title": "PYAR KIYA TO NIBHANA",
+    "artist": "Anuradha Paudwal - Topic",
+    "accent": "#b8391c",
+    "youtubeId": "XuA0BvYksyI"
+  },
+  {
+    "id": "YSRQfSmi9pI",
+    "title": "Aapke Pyaar Mein Hum",
+    "artist": "Alka Yagnik - Topic",
+    "accent": "#7c9cd4",
+    "youtubeId": "YSRQfSmi9pI"
+  },
+  {
+    "id": "ZaURV4XxdPI",
+    "title": "Chand Sifarish",
+    "artist": "Shaan - Topic",
+    "accent": "#ff8c42",
+    "youtubeId": "ZaURV4XxdPI"
+  },
+  {
+    "id": "tu7gxUfeRKc",
+    "title": "College Ki Ladkiyon",
+    "artist": "Udit Narayan - Topic",
+    "accent": "#4fb3a9",
+    "youtubeId": "tu7gxUfeRKc"
+  },
+  {
+    "id": "nUSeZx7TYmY",
+    "title": "AISA DEEWANA",
+    "artist": "Sonu Nigam - Topic",
+    "accent": "#e0576b",
+    "youtubeId": "nUSeZx7TYmY"
+  },
+  {
+    "id": "cVT3BKkPCc4",
+    "title": "Is Tarah Aashiqui Ka - Kumar Sanu",
+    "artist": "Kumar Sanu - Topic",
+    "accent": "#ffd166",
+    "youtubeId": "cVT3BKkPCc4"
+  },
+  {
+    "id": "BQK6ReLw_20",
+    "title": "Jo Pallu Gira Diya",
+    "artist": "Release - Topic",
+    "accent": "#b8391c",
+    "youtubeId": "BQK6ReLw_20"
+  },
+  {
+    "id": "eLzEykVMZn0",
+    "title": "Ae Kash Ke Hum",
+    "artist": "Jatin Lalit - Topic",
+    "accent": "#7c9cd4",
+    "youtubeId": "eLzEykVMZn0"
+  },
+  {
+    "id": "VtifRq1aBkA",
+    "title": "TUJHE DEKH KE DIL",
+    "artist": "Jaspinder Narula - Topic",
+    "accent": "#ff8c42",
+    "youtubeId": "VtifRq1aBkA"
+  },
+  {
+    "id": "qzj5e6CywRY",
+    "title": "Milne Ki Tum Koshish Karna",
+    "artist": "Asha Bhosle - Topic",
+    "accent": "#4fb3a9",
+    "youtubeId": "qzj5e6CywRY"
+  },
+  {
+    "id": "cp-aVe09H1k",
+    "title": "Sona Kitna Sona Hai",
+    "artist": "Udit Narayan - Topic",
+    "accent": "#e0576b",
+    "youtubeId": "cp-aVe09H1k"
+  },
+  {
+    "id": "Wk-YDaTAwyI",
+    "title": "DILBAR DILBAR",
+    "artist": "Alka Yagnik - Topic",
+    "accent": "#ffd166",
+    "youtubeId": "Wk-YDaTAwyI"
+  },
+  {
+    "id": "gIMdl2q2x3E",
+    "title": "Ho Gaya Hai Tujhko To Pyar Sajna",
+    "artist": "Lata Mangeshkar - Topic",
+    "accent": "#b8391c",
+    "youtubeId": "gIMdl2q2x3E"
   }
 ];
